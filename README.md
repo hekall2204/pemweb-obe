@@ -38,3 +38,11 @@ Repositori ini disusun khusus untuk menyimpan seluruh modul, latihan, dan tugas 
 ## Alamat URL Lokal
 Halaman praktikum dapat diakses secara lokal melalui tautan berikut:
 * `http://localhost/pemweb-obe/`
+
+---
+
+## Ringkasan Catatan HTTP
+* **200 OK:** Request berhasil.
+* **301/302:** URL dipindahkan (permanen/sementara).
+* **404:** File/halaman tidak ditemukan.
+* **500:** Error internal pada server.
