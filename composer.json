@@ -1,0 +1,15 @@
+{
+    "name": "asus/pemweb-obe",
+    "autoload": {
+        "psr-4": {
+            "Asus\\PemwebObe\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hekall2204",
+            "email": "hekall2204@gmail.com"
+        }
+    ],
+    "require": {}
+}
