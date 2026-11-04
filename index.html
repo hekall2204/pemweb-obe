@@ -15,10 +15,13 @@
       <nav aria-label="Navigasi Utama">
         <ul>
           <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#inventaris">Pinjam Barang</a></li>
+          <li><a href="#tambah-alat">Tambah Alat</a></li>
           <li><a href="#pendidikan">Pendidikan</a></li>
           <li><a href="#kontak">Kontak</a></li>
         </ul>
       </nav>
+      <button id="theme-button" type="button" class="btn-theme">Ganti Tema</button>
     </div>
   </header>
 
@@ -33,6 +36,103 @@
         <p>Selamat datang di website pribadi saya. Halaman ini memuat informasi singkat mengenai latar belakang pendidikan dan kontak saya.</p>
       </div>
     </section>
+
+    <section id="inventaris">
+      <h2>Pinjam Barang</h2>
+
+      <div class="controls-grid">
+        <div class="search-box">
+          <input type="text" id="input-cari" placeholder="Cari alat berdasarkan nama..." aria-label="Cari alat">
+        </div>
+        
+        <div class="filter-buttons">
+          <button type="button" data-filter="Semua" class="btn-filter active">Semua</button>
+          <button type="button" data-filter="Dipinjam" class="btn-filter">Dipinjam</button>
+          <button type="button" data-filter="Tersedia" class="btn-filter">Tersedia</button>
+        </div>
+
+        <div class="limit-box">
+          <label for="items-per-page">Tampilkan:</label>
+          <select id="items-per-page">
+            <option value="5">5 Item</option>
+            <option value="10">10 Item</option>
+            <option value="20">20 Item</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="daftar-alat" class="cards"></div>
+    </section>
+
+    <section id="tambah-alat">
+      <h2>Tambah Data Alat</h2>
+      <div id="form-status" class="form-status" aria-live="polite"></div>
+
+      <form id="form-alat" novalidate>
+        <div>
+          <label for="nama-alat">Nama Alat:</label>
+          <input type="text" id="nama-alat" name="nama" required minlength="3" placeholder="Masukkan nama alat">
+          <span id="error-nama" class="error-msg"></span>
+        </div>
+
+        <div>
+          <label for="kategori-alat">Kategori:</label>
+          <select id="kategori-alat" name="kategori" required>
+         <option value="">-- Pilih Kategori --</option>
+         <option value="Smartphone">Smartphone</option>
+         <option value="Laptop">Laptop</option>
+         <option value="Aksesori">Aksesori</option>
+        </select>
+        <span id="error-kategori" class="error-msg"></span>
+       </div>
+
+        <div>
+          <label for="jumlah-alat">Jumlah:</label>
+          <input type="number" id="jumlah-alat" name="jumlah" min="1" required placeholder="Masukkan jumlah unit">
+          <span id="error-jumlah" class="error-msg"></span>
+        </div>
+
+        <div>
+          <label for="kondisi-alat">Kondisi:</label>
+          <select id="kondisi-alat" name="kondisi" required>
+            <option value="">-- Pilih Kondisi --</option>
+            <option value="Baik">Baik</option>
+            <option value="Perlu Perbaikan">Perlu Perbaikan</option>
+            <option value="Rusak">Rusak</option>
+          </select>
+          <span id="error-kondisi" class="error-msg"></span>
+        </div>
+
+        <div>
+          <label for="tanggal-alat">Tanggal Perolehan:</label>
+          <input type="date" id="tanggal-alat" name="tanggal" required>
+          <span id="error-tanggal" class="error-msg"></span>
+        </div>
+
+        <div>
+          <label for="lokasi-alat">Lokasi:</label>
+          <input type="text" id="lokasi-alat" name="lokasi" required placeholder="Contoh: Sebengkok, Markoni">
+          <span id="error-lokasi" class="error-msg"></span>
+        </div>
+
+        <button type="submit">Tambah & Preview Data</button>
+      </form>
+
+      <div id="preview-container" class="preview-card" style="display: none; margin-top: 1.5rem;">
+        <h3>Preview Data Alat</h3>
+        <div id="preview-content"></div>
+      </div>
+    </section>
+
+    <section id="pengguna-api">
+  <h2>Daftar Pengguna</h2>
+  <p id="api-message" aria-live="polite" class="form-status"></p>
+  <button id="btn-retry" type="button" style="display: none; margin-bottom: 1rem;">
+    Coba Lagi
+  </button>
+
+  <ul id="api-output" style="list-style: none; padding: 0;"></ul>
+</section>
 
     <section id="pendidikan">
       <h2>Pendidikan</h2>

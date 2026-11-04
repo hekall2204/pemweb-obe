@@ -10,6 +10,13 @@ export function ringkasInventaris(data) {
     };
 }
 
+export function filterBerdasarkanLokasi(data, lokasiTarget) {
+    if (!Array.isArray(data)) {
+        throw new TypeError('Data harus berupa array');
+    }
+    return data.filter(item => item.lokasi.toLowerCase() === lokasiTarget.toLowerCase());
+}
+
 export function cariAlatBerdasarkanId(data, idTarget) {
     if (!Array.isArray(data)) {
         throw new TypeError('Data harus berupa array');
@@ -21,6 +28,6 @@ export function formatStringRingkasan(item) {
     if (!item || typeof item !== 'object') {
         return 'Data alat tidak valid';
     }
-    const { id, nama, kategori, jumlah, kondisi } = item;
-    return `[ID ${id}] ${nama} (${kategori}) - Jumlah: ${jumlah} unit | Kondisi: ${kondisi}`;
+    const { id, nama, kategori, jumlah, kondisi, lokasi } = item;
+    return `[ID ${id}] ${nama} (${kategori}) - Jumlah: ${jumlah} unit | Kondisi: ${kondisi} | Lokasi: ${lokasi}`;
 }
