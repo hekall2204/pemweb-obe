@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/auth.php';
+
+requireRole(['admin', 'petugas']);
 
 header('Content-Type: application/json; charset=utf-8');
 $method = $_SERVER['REQUEST_METHOD'];
@@ -10,7 +13,7 @@ try {
             // 1. GET by ID (jika ada parameter ?id=...)
             if (isset($_GET['id'])) {
                 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-                $stmt = $pdo->prepare('SELECT * FROM alat WHERE id = ?');
+                $stmt = $pdo->prepare('SELECT * FROM salah WHERE id = ?');
                 $stmt->execute([$id]);
                 $result = $stmt->fetch();
                 
@@ -23,7 +26,7 @@ try {
                 exit;
             }
 
-            // 2. GET Collection dengan Pencarian & Pagination (Latihan Modul)
+            // 2. GET Collection dengan Filter Pencarian & Pagination
             $search = $_GET['search'] ?? '';
             $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
             $limit = 5;
@@ -45,6 +48,9 @@ try {
             $nama = trim((string) ($input['nama'] ?? ''));
             $kategori = trim((string) ($input['kategori'] ?? ''));
             $jumlah = filter_var($input['jumlah'] ?? null, FILTER_VALIDATE_INT);
+            $kondisi = trim((string) ($input['kondisi'] ?? 'Baik'));
+            $tanggal = trim((string) ($input['tanggal'] ?? date('Y-m-d')));
+            $lokasi = trim((string) ($input['lokasi'] ?? 'Umum'));
 
             if ($nama === '' || $kategori === '' || $jumlah === false || $jumlah < 0) {
                 http_response_code(400);
@@ -52,15 +58,18 @@ try {
                 exit;
             }
 
-            $stmt = $pdo->prepare('INSERT INTO alat (nama, kategori, jumlah) VALUES (:nama, :kategori, :jumlah)');
-            $stmt->execute(compact('nama', 'kategori', 'jumlah'));
+            $stmt = $pdo->prepare('INSERT INTO alat (nama, kategori, jumlah, kondisi, tanggal, lokasi) VALUES (:nama, :kategori, :jumlah, :kondisi, :tanggal, :lokasi)');
+            $stmt->execute(compact('nama', 'kategori', 'jumlah', 'kondisi', 'tanggal', 'lokasi'));
 
             http_response_code(201);
             echo json_encode([
                 'id' => (int) $pdo->lastInsertId(),
                 'nama' => $nama,
                 'kategori' => $kategori,
-                'jumlah' => $jumlah
+                'jumlah' => $jumlah,
+                'kondisi' => $kondisi,
+                'tanggal' => $tanggal,
+                'lokasi' => $lokasi
             ]);
             break;
 
@@ -86,6 +95,9 @@ try {
             $nama = trim((string) ($input['nama'] ?? ''));
             $kategori = trim((string) ($input['kategori'] ?? ''));
             $jumlah = filter_var($input['jumlah'] ?? null, FILTER_VALIDATE_INT);
+            $kondisi = trim((string) ($input['kondisi'] ?? 'Baik'));
+            $tanggal = trim((string) ($input['tanggal'] ?? date('Y-m-d')));
+            $lokasi = trim((string) ($input['lokasi'] ?? 'Umum'));
 
             if ($nama === '' || $kategori === '' || $jumlah === false || $jumlah < 0) {
                 http_response_code(400);
@@ -93,8 +105,8 @@ try {
                 exit;
             }
 
-            $stmt = $pdo->prepare('UPDATE alat SET nama = :nama, kategori = :kategori, jumlah = :jumlah WHERE id = :id');
-            $stmt->execute(compact('nama', 'kategori', 'jumlah', 'id'));
+            $stmt = $pdo->prepare('UPDATE alat SET nama = :nama, kategori = :kategori, jumlah = :jumlah, kondisi = :kondisi, tanggal = :tanggal, lokasi = :lokasi WHERE id = :id');
+            $stmt->execute(compact('nama', 'kategori', 'jumlah', 'kondisi', 'tanggal', 'lokasi', 'id'));
 
             echo json_encode(['message' => 'Data berhasil diperbarui']);
             break;
@@ -128,7 +140,7 @@ try {
             break;
     }
 } catch (Exception $e) {
-    // Response error generik (500) agar detail internal sistem aman
+    // Boundary API & Response Error 500 Generik
     http_response_code(500);
     echo json_encode(['error' => ['code' => 500, 'message' => 'Terjadi kesalahan pada server']]);
 }
