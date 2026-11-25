@@ -306,16 +306,31 @@ if (formAlat) {
         };
 
         if (previewContent && previewContainer) {
-            previewContent.innerHTML = `
-                <p><strong>Nama Alat:</strong> ${newAlat.nama}</p>
-                <p><strong>Kategori:</strong> ${newAlat.kategori}</p>
-                <p><strong>Jumlah:</strong> ${newAlat.jumlah} unit</p>
-                <p><strong>Kondisi:</strong> ${newAlat.kondisi}</p>
-                <p><strong>Tanggal Perolehan:</strong> ${newAlat.tanggal}</p>
-                <p><strong>Lokasi:</strong> ${newAlat.lokasi}</p>
-            `;
-            previewContainer.style.display = 'block';
-        }
+    while (previewContent.firstChild) {
+        previewContent.removeChild(previewContent.firstChild);
+    }
+
+    const items = [
+        { label: 'Nama Alat:', value: newAlat.nama },
+        { label: 'Kategori:', value: newAlat.kategori },
+        { label: 'Jumlah:', value: `${newAlat.jumlah} unit` },
+        { label: 'Kondisi:', value: newAlat.kondisi },
+        { label: 'Tanggal Perolehan:', value: newAlat.tanggal },
+        { label: 'Lokasi:', value: newAlat.lokasi }
+    ];
+
+    items.forEach(item => {
+        const p = document.createElement('p');
+        const strong = document.createElement('strong');
+        strong.textContent = item.label + ' ';
+        
+        p.appendChild(strong);
+        p.appendChild(document.createTextNode(item.value));
+        previewContent.appendChild(p);
+    });
+
+    previewContainer.style.display = 'block';
+}
 
         inventaris.push(newAlat);
         localStorage.setItem('dataPeminjaman', JSON.stringify(inventaris));

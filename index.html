@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Website Profil Pribadi Muhammad Haikal - Mahasiswa Teknik Komputer UBT">
   <title>Muhammad Haikal - Teknik Komputer UBT</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -42,9 +43,9 @@
 
       <div class="controls-grid">
         <div class="search-box">
-          <input type="text" id="input-cari" placeholder="Cari alat berdasarkan nama..." aria-label="Cari alat">
+          <input type="text" id="input-cari" placeholder="Cari alat berdasarkan nama..." aria-label="Cari alat" autocomplete="off">
         </div>
-        
+
         <div class="filter-buttons">
           <button type="button" data-filter="Semua" class="btn-filter active">Semua</button>
           <button type="button" data-filter="Dipinjam" class="btn-filter">Dipinjam</button>
@@ -53,7 +54,7 @@
 
         <div class="limit-box">
           <label for="items-per-page">Tampilkan:</label>
-          <select id="items-per-page">
+          <select id="items-per-page" autocomplete="off">
             <option value="5">5 Item</option>
             <option value="10">10 Item</option>
             <option value="20">20 Item</option>
@@ -71,30 +72,30 @@
       <form id="form-alat" novalidate>
         <div>
           <label for="nama-alat">Nama Alat:</label>
-          <input type="text" id="nama-alat" name="nama" required minlength="3" placeholder="Masukkan nama alat">
+          <input type="text" id="nama-alat" name="nama" required minlength="3" placeholder="Masukkan nama alat" autocomplete="off">
           <span id="error-nama" class="error-msg"></span>
         </div>
 
         <div>
           <label for="kategori-alat">Kategori:</label>
-          <select id="kategori-alat" name="kategori" required>
-         <option value="">-- Pilih Kategori --</option>
-         <option value="Smartphone">Smartphone</option>
-         <option value="Laptop">Laptop</option>
-         <option value="Aksesori">Aksesori</option>
-        </select>
-        <span id="error-kategori" class="error-msg"></span>
-       </div>
+          <select id="kategori-alat" name="kategori" required autocomplete="off">
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Smartphone">Smartphone</option>
+            <option value="Laptop">Laptop</option>
+            <option value="Aksesori">Aksesori</option>
+          </select>
+          <span id="error-kategori" class="error-msg"></span>
+        </div>
 
         <div>
           <label for="jumlah-alat">Jumlah:</label>
-          <input type="number" id="jumlah-alat" name="jumlah" min="1" required placeholder="Masukkan jumlah unit">
+          <input type="number" id="jumlah-alat" name="jumlah" min="1" required placeholder="Masukkan jumlah unit" autocomplete="off">
           <span id="error-jumlah" class="error-msg"></span>
         </div>
 
         <div>
           <label for="kondisi-alat">Kondisi:</label>
-          <select id="kondisi-alat" name="kondisi" required>
+          <select id="kondisi-alat" name="kondisi" required autocomplete="off">
             <option value="">-- Pilih Kondisi --</option>
             <option value="Baik">Baik</option>
             <option value="Perlu Perbaikan">Perlu Perbaikan</option>
@@ -105,13 +106,13 @@
 
         <div>
           <label for="tanggal-alat">Tanggal Perolehan:</label>
-          <input type="date" id="tanggal-alat" name="tanggal" required>
+          <input type="date" id="tanggal-alat" name="tanggal" required autocomplete="off">
           <span id="error-tanggal" class="error-msg"></span>
         </div>
 
         <div>
           <label for="lokasi-alat">Lokasi:</label>
-          <input type="text" id="lokasi-alat" name="lokasi" required placeholder="Contoh: Sebengkok, Markoni">
+          <input type="text" id="lokasi-alat" name="lokasi" required placeholder="Contoh: Sebengkok, Markoni" autocomplete="off">
           <span id="error-lokasi" class="error-msg"></span>
         </div>
 
@@ -125,14 +126,14 @@
     </section>
 
     <section id="pengguna-api">
-  <h2>Daftar Pengguna</h2>
-  <p id="api-message" aria-live="polite" class="form-status"></p>
-  <button id="btn-retry" type="button" style="display: none; margin-bottom: 1rem;">
-    Coba Lagi
-  </button>
+      <h2>Daftar Pengguna</h2>
+      <p id="api-message" aria-live="polite" class="form-status"></p>
+      <button id="btn-retry" type="button" style="display: none; margin-bottom: 1rem;">
+        Coba Lagi
+      </button>
 
-  <ul id="api-output" style="list-style: none; padding: 0;"></ul>
-</section>
+      <ul id="api-output" style="list-style: none; padding: 0;"></ul>
+    </section>
 
     <section id="pendidikan">
       <h2>Pendidikan</h2>
@@ -152,20 +153,20 @@
     <section id="kontak">
       <h2>Kontak Saya</h2>
       <p>Jika ada pertanyaan atau ingin berdiskusi, Kamu dapat mengirimkan pesan melalui formulir di bawah ini atau melalui email direct.</p>
-      
+
       <div class="contact-grid">
         <form action="#" method="post">
           <div>
             <label for="nama">Nama Lengkap:</label>
-            <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" required>
+            <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" autocomplete="name" required>
           </div>
           <div>
             <label for="email">Email Anda:</label>
-            <input type="email" id="email" name="email" placeholder="nama@contoh.com" required>
+            <input type="email" id="email" name="email" placeholder="nama@contoh.com" autocomplete="email" required>
           </div>
           <div>
             <label for="pesan">Pesan:</label>
-            <textarea id="pesan" name="pesan" rows="4" placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+            <textarea id="pesan" name="pesan" rows="4" placeholder="Tuliskan pesan Anda di sini..." autocomplete="off" required></textarea>
           </div>
           <button type="submit">Kirim Pesan</button>
         </form>

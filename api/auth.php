@@ -4,6 +4,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// === TAMBAHKAN PEMBANGKITAN CSRF TOKEN DI SINI ===
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+// ================================================
+
 function requireLogin(): void {
     if (empty($_SESSION['user_id'])) {
         http_response_code(401);
@@ -14,7 +20,7 @@ function requireLogin(): void {
 
 function requireRole(array $roles): void {
     requireLogin();
-    
+
     $userRole = $_SESSION['role'] ?? '';
     if (!in_array($userRole, $roles, true)) {
         http_response_code(403);

@@ -8,12 +8,25 @@ header('Content-Type: application/json; charset=utf-8');
 $method = $_SERVER['REQUEST_METHOD'];
 
 try {
+    // === IMPLEMENTASI LANGKAH 5: VALIDASI CSRF TOKEN ===
+    // Lindungi metode yang mengubah state data (POST, PUT, PATCH, DELETE)
+    if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'], true)) {
+        $input_data = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+        $clientToken = $input_data['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+
+        if (!isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $clientToken)) {
+            http_response_code(403);
+            echo json_encode(['error' => ['code' => 403, 'message' => 'CSRF token tidak valid atau kadaluarsa']]);
+            exit;
+        }
+    }
+    // ==================================================
+
     switch ($method) {
         case 'GET':
-            // 1. GET by ID (jika ada parameter ?id=...)
             if (isset($_GET['id'])) {
                 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-                $stmt = $pdo->prepare('SELECT * FROM salah WHERE id = ?');
+                $stmt = $pdo->prepare('SELECT * FROM alat WHERE id = ?');
                 $stmt->execute([$id]);
                 $result = $stmt->fetch();
                 
