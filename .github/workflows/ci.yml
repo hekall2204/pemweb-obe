@@ -1,0 +1,28 @@
+name: CI PHP Syntax & Simple Test
+
+on:
+  push:
+    branches: [ main, security-review ]
+  pull_request:
+    branches: [ main, security-review ]
+
+jobs:
+  php-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: PHP Syntax Check (php -l)
+        run: |
+          find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+
+      - name: Run Simple Test
+        run: php tests/smoke_test.php
